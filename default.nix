@@ -3,7 +3,7 @@ rec {
   bash =
     let
       pkg =
-        if pkgs.isDarwin then
+        if pkgs.stdenv.isDarwin then
           pkgs.bashInteractive
         else
           pkgs.pkgsStatic.bashInteractive;
