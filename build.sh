@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-system=$(nix-instantiate --eval --expr builtins.currentSystem | jq -r)
+system=$(nix-instantiate --eval --expr builtins.currentSystem | xargs)
 archive_name=bash-${system}.tar.gz
 archive_path=build/$archive_name
 bin_name=bash-${system}

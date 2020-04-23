@@ -20,9 +20,9 @@ jobs:
       id: build
     - uses: actions/upload-artifact@v1
       with:
-        name: ${{ steps.cache-primes.outputs.archive-name }}
-        path: ${{ steps.cache-primes.outputs.archive-path }}
+        name: ${{ steps.build.outputs.archive-name }}
+        path: ${{ steps.build.outputs.archive-path }}
     - uses: actions/upload-artifact@v1
       with:
-        name: ${{ steps.cache-primes.outputs.bin-name }}
-        path: ${{ steps.cache-primes.outputs.bin-path }}
+        name: ${{ steps.build.outputs.bin-name }}
+        path: ${{ steps.build.outputs.bin-path }}
