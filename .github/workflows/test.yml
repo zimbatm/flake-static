@@ -16,4 +16,12 @@ jobs:
       with:
         name: bash-static
         signingKey: '${{ secrets.CACHIX_SIGNING_KEY }}'
-    - run: nix-build
+    - run: ./build.sh
+    - uses: actions/upload-artifact@v1
+      with:
+        name: bash
+        path: build/bash
+    - uses: actions/upload-artifact@v1
+      with:
+        name: bash.tar.gz
+        path: build/bash.tar.gz
