@@ -23,14 +23,14 @@ let
       "cp ${drv}/bin/${name} $out";
 
   # Creates a reproducible archive
-  mkArchive = name: drv:
+  mkGzip = name: drv:
     pkgs.runCommand
-      "${name}-${system}.tar.gz"
-      { nativeBuildInputs = [ pkgs.gnutar ]; }
-      "tar czvf $out --mode u+w -C ${drv} .";
+      "${name}-${system}.gz"
+      { nativeBuildInputs = [ pkgs.gzip ]; }
+      "gzip --no-name --stdout ${drv}/bin/${name} > $out";
 in
 {
   inherit bash;
-  archive = mkArchive "bash" bash;
+  archive = mkGzip "bash" bash;
   bin = mkBin "bash" bash;
 }

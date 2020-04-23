@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 system=$(nix-instantiate --eval --expr builtins.currentSystem | xargs)
-archive_name=bash-${system}.tar.gz
+archive_name=bash-${system}.gz
 archive_path=build/$archive_name
 bin_name=bash-${system}
 bin_path=build/$bin_name
