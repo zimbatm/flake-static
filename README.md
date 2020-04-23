@@ -9,4 +9,5 @@ The build is done using Nix Flakes.
 
 ## TODO
 
+* create releases
 

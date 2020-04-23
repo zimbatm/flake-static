@@ -1,28 +1,36 @@
-{ pkgs ? import <nixpkgs> { } }:
-rec {
-  bash =
-    let
-      pkg =
-        if pkgs.stdenv.isDarwin then
-          pkgs.bashInteractive
-        else
-          pkgs.pkgsStatic.bashInteractive;
-    in
-    pkg.overrideAttrs
-      (attrs: {
-        postFixup = ''
-          rm -rf "$out/bin/sh" "$out/share" "$out/bin/bashbug"
-        '';
-      });
+{ pkgs ? import ./nixpkgs.nix }:
+let
+  system = pkgs.system;
+
+  bashOrig =
+    if pkgs.stdenv.isDarwin then
+      # musl is not available on darwin
+      pkgs.bashInteractive
+    else
+      pkgs.pkgsStatic.bashInteractive;
+
+  bash = bashOrig.overrideAttrs
+    (attrs: {
+      postFixup = ''
+        rm -rf "$out/bin/sh" "$out/share" "$out/bin/bashbug"
+      '';
+    });
+
+  mkBin = name: drv:
+    pkgs.runCommand
+      "${name}-${system}"
+      { }
+      "cp ${drv}/bin/${name} $out";
 
   # Creates a reproducible archive
-  archive = drv:
+  mkArchive = name: drv:
     pkgs.runCommand
-      "${drv.name}.tar.gz"
+      "${name}-${system}.tar.gz"
       { nativeBuildInputs = [ pkgs.gnutar ]; }
-      ''
-        tar czvf $out --mode u+w -C ${drv} .
-      '';
-
-  bashTarball = archive bash;
+      "tar czvf $out --mode u+w -C ${drv} .";
+in
+{
+  inherit bash;
+  archive = mkArchive "bash" bash;
+  bin = mkBin "bash" bash;
 }
