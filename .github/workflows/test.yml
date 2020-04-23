@@ -17,11 +17,12 @@ jobs:
         name: bash-static
         signingKey: '${{ secrets.CACHIX_SIGNING_KEY }}'
     - run: ./build.sh
+      id: build
     - uses: actions/upload-artifact@v1
       with:
-        name: bash
-        path: build/bash
+        name: ${{ steps.cache-primes.outputs.archive-name }}
+        path: ${{ steps.cache-primes.outputs.archive-path }}
     - uses: actions/upload-artifact@v1
       with:
-        name: bash.tar.gz
-        path: build/bash.tar.gz
+        name: ${{ steps.cache-primes.outputs.bin-name }}
+        path: ${{ steps.cache-primes.outputs.bin-path }}
