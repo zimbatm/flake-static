@@ -23,9 +23,6 @@ jobs:
       id: build
     - uses: actions/upload-artifact@v2
       with:
-        name: ${{ steps.build.outputs.archive-name }}
-        path: ${{ steps.build.outputs.archive-path }}
-    - uses: actions/upload-artifact@v2
-      with:
-        name: ${{ steps.build.outputs.bin-name }}
-        path: ${{ steps.build.outputs.bin-path }}
+        name: build
+        path: ./build
+        if-no-files-found: error
