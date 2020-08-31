@@ -1,4 +1,6 @@
 #!/usr/bin/env bash
+set -euo pipefail
+
 system=$(nix-instantiate --eval --expr builtins.currentSystem | xargs)
 archive_name=bash-${system}.gz
 archive_path=build/$archive_name
