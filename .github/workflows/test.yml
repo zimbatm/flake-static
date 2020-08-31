@@ -6,23 +6,25 @@ jobs:
   tests:
     runs-on: ${{ matrix.os }}
     strategy:
-      fail-fast: false
+      fail-fast: true
       matrix:
         os: [ubuntu-18.04, macOS-latest]
     steps:
     - uses: actions/checkout@v2
-    - uses: cachix/install-nix-action@v8
-    - uses: cachix/cachix-action@master
+    - uses: cachix/install-nix-action@v10
+      with:
+        skip_adding_nixpkgs_channel: true
+    - uses: cachix/cachix-action@v6
       with:
         name: bash-static
         signingKey: '${{ secrets.CACHIX_SIGNING_KEY }}'
     - run: ./build.sh
       id: build
-    - uses: actions/upload-artifact@v1
+    - uses: actions/upload-artifact@v2
       with:
         name: ${{ steps.build.outputs.archive-name }}
         path: ${{ steps.build.outputs.archive-path }}
-    - uses: actions/upload-artifact@v1
+    - uses: actions/upload-artifact@v2
       with:
         name: ${{ steps.build.outputs.bin-name }}
         path: ${{ steps.build.outputs.bin-path }}
