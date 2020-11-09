@@ -12,7 +12,7 @@ jobs:
         os: [ubuntu-18.04, macOS-latest]
     steps:
     - uses: actions/checkout@v2
-    - uses: cachix/install-nix-action@v11
+    - uses: cachix/install-nix-action@v12
       with:
         skip_adding_nixpkgs_channel: true
     - uses: cachix/cachix-action@v6
