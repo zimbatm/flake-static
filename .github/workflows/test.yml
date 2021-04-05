@@ -15,7 +15,7 @@ jobs:
     - uses: cachix/install-nix-action@v13
       with:
         skip_adding_nixpkgs_channel: true
-    - uses: cachix/cachix-action@v8
+    - uses: cachix/cachix-action@v9
       with:
         name: bash-static
         signingKey: '${{ secrets.CACHIX_SIGNING_KEY }}'
